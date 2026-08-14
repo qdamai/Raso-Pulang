@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pure CSS 3D Art — Rendang Padang 360° (DILARANG <img> / <svg> / WebGL)</title>
+
+  <style>
+    /* ==========================================================================
+       STRICT RULES ENFORCED:
+       - 100% Pure HTML <div> and CSS 3D Transforms
+       - NO <img>, NO <canvas>, NO <svg>, NO WebGL, NO Three.js
+       - Dual-Face: Rendang Top View (.plate-top) & Clean White Plate Bottom (.plate-bottom)
+       ========================================================================== */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: #FAF5ED;
+      color: #200C06;
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      user-select: none;
+    }
+
+    .title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 28px;
+      font-weight: 700;
+      color: #200C06;
+      margin-bottom: 6px;
+      text-align: center;
+    }
+
+    .subtitle {
+      font-size: 13px;
+      color: #A04028;
+      margin-bottom: 24px;
+      font-style: italic;
+      text-align: center;
+    }
+
+    /* 1. SCENE CONTAINER (Perspektif Utama) */
+    .scene {
+      width: 320px;
+      height: 320px;
+      perspective: 1000px;
+      position: relative;
+      cursor: grab;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .scene:active {
+      cursor: grabbing;
+    }
+
+    /* Bayangan Lantai Dinamis */
+    .floor-shadow {
+      position: absolute;
+      width: 280px;
+      height: 160px;
+      background: rgba(20, 6, 3, 0.45);
+      border-radius: 50%;
+      filter: blur(20px);
+      transform: translateY(110px) rotateX(90deg);
+      pointer-events: none;
+    }
+
+    /* 2. OBJECT CONTAINER (.plate-container - preserve-3d) */
+    .plate-container {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.1s ease-out;
+    }
+
+    /* ==========================================================================
+       TAMPAK BAWAH: DASAR PIRING KERAMIK PUTIH POLOS (.plate-bottom)
+       ========================================================================== */
+    .plate-bottom {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      transform: rotateX(180deg) translateZ(1px);
+      background: radial-gradient(circle, #FFFFFF 0%, #F5F2EB 70%, #E2DDD2 100%);
+      border: 6px solid #ECE7DE;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3), inset 0 0 15px rgba(0,0,0,0.08);
+    }
+
+    /* Ring Dasar Piring Keramik (Plate Foot Ring) */
+    .plate-foot-ring {
+      width: 170px;
+      height: 170px;
+      border-radius: 50%;
+      border: 4px solid #DDD7C8;
+      box-shadow: inset 0 2px 6px rgba(0,0,0,0.12), 0 2px 6px rgba(255,255,255,0.8);
+      background: radial-gradient(circle, #FAF8F3 0%, #EFEBE2 100%);
+    }
+
+    /* ==========================================================================
+       TAMPAK ATAS: ISIAN RENDANG PADANG MURNI DIV (.plate-top)
+       ========================================================================== */
+    .plate-top {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      transform: translateZ(1px);
+      background: radial-gradient(circle, #FFFFFF 0%, #F4F0E6 75%, #DCD5C3 100%);
+      border: 6px solid #ECE7DE;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.35), inset 0 0 25px rgba(0,0,0,0.15);
+    }
+
+    /* Basin Kuali/Mangkuk Dalam */
+    .bowl-basin {
+      position: relative;
+      width: 256px;
+      height: 256px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      background: radial-gradient(circle, #1F0A04 0%, #2D120B 60%, #150602 100%);
+      box-shadow: inset 0 0 30px rgba(0,0,0,0.95);
+    }
+
+    /* Danau Minyak Kelapa Pekat */
+    .oil-lake {
+      position: absolute;
+      inset: 4px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #5C2618 0%, #200C06 70%);
+      opacity: 0.8;
+    }
+
+    /* Daun Pisang Murni DIV */
+    .banana-leaf {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      width: 140px;
+      height: 80px;
+      background: linear-gradient(90deg, #2D5A34 0%, #4A8B5B 50%, #22452B 100%);
+      border-radius: 100px 10px 100px 10px;
+      border-top: 2px solid #76B887;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      transform: translateZ(12px) rotate(15deg);
+    }
+
+    .leaf-vein-1 { width: 100%; height: 2px; background: #1A3820; margin-top: 16px; transform: rotate(6deg); }
+    .leaf-vein-2 { width: 100%; height: 1px; background: rgba(104, 165, 120, 0.4); margin-top: 8px; }
+    .leaf-vein-3 { width: 100%; height: 1px; background: rgba(104, 165, 120, 0.4); margin-top: 12px; }
+
+    /* Tumpukan Daging Rendang 3D Murni DIV */
+    .beef-stack {
+      position: relative;
+      width: 192px;
+      height: 192px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      z-index: 20;
+      transform-style: preserve-3d;
+      transform: translateZ(25px);
+    }
+
+    /* Gumpalan Daging 1 (Utama Tengah) */
+    .chunk-1 {
+      position: relative;
+      width: 80px;
+      height: 64px;
+      background: linear-gradient(135deg, #3B2210 0%, #2C1608 60%, #1A0A03 100%);
+      border-radius: 28px 14px 35px 20px;
+      border: 2px solid #522C16;
+      box-shadow: inset 0 2px 4px rgba(255,255,255,0.15), 0 8px 16px rgba(0,0,0,0.6);
+      transform: translateZ(15px) rotate(-8deg);
+    }
+
+    .crumb-1 { position: absolute; top: 4px; left: 8px; right: 8px; height: 20px; background: #7A4522; border-radius: 50%; filter: blur(0.5px); }
+    .crumb-2 { position: absolute; top: 8px; left: 12px; right: 12px; height: 12px; background: #A36033; border-radius: 50%; }
+
+    /* Gumpalan Daging 2 (Samping Kanan) */
+    .chunk-2 {
+      position: relative;
+      width: 72px;
+      height: 60px;
+      background: linear-gradient(135deg, #331A0B 0%, #241004 70%, #120401 100%);
+      border-radius: 16px 30px 20px 26px;
+      border: 2px solid #48230D;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.5);
+      transform: translateZ(22px) rotate(14deg);
+      margin-left: -12px;
+    }
+    .crumb-3 { position: absolute; top: 4px; left: 8px; right: 8px; height: 16px; background: #6E3E1E; border-radius: 50%; }
+
+    /* Gumpalan Daging 3 (Atas Kiri) */
+    .chunk-3 {
+      position: relative;
+      width: 64px;
+      height: 56px;
+      background: linear-gradient(135deg, #422612 0%, #2B1507 70%, #150802 100%);
+      border-radius: 24px 18px 30px 14px;
+      border: 2px solid #5C3218;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.5);
+      transform: translateZ(28px) rotate(-16deg);
+      margin-top: -16px;
+    }
+
+    /* Gumpalan Daging 4 (Bawah Tengah) */
+    .chunk-4 {
+      position: relative;
+      width: 88px;
+      height: 56px;
+      background: linear-gradient(135deg, #2D1609 0%, #1D0A03 70%, #0E0301 100%);
+      border-radius: 20px 26px 16px 32px;
+      border: 2px solid #421D0A;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.6);
+      transform: translateZ(35px) rotate(4deg);
+      margin-top: -8px;
+    }
+
+    /* Hiasan Cabai Merah 1 Murni DIV */
+    .chili-red-1 {
+      position: absolute;
+      top: 24px;
+      left: 24px;
+      width: 48px;
+      height: 16px;
+      background: linear-gradient(90deg, #C83726 0%, #E04533 50%, #8C1E12 100%);
+      border-radius: 50px;
+      border: 1px solid #FFAAA0;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+      transform: translateZ(45px) rotate(-28deg);
+    }
+    .chili-stem { width: 8px; height: 6px; background: #4A8B5B; border-radius: 50%; margin-left: -2px; margin-top: 4px; }
+
+    /* Hiasan Cabai Merah 2 Murni DIV */
+    .chili-red-2 {
+      position: absolute;
+      top: 48px;
+      left: 16px;
+      width: 40px;
+      height: 14px;
+      background: linear-gradient(90deg, #C83726 0%, #E04533 50%, #9C2A1B 100%);
+      border-radius: 50px;
+      border: 1px solid #FFAAA0;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+      transform: translateZ(48px) rotate(16deg);
+    }
+
+    /* Hiasan Cabai Rawit Kuning Murni DIV */
+    .chili-yellow {
+      position: absolute;
+      top: 32px;
+      left: 64px;
+      width: 40px;
+      height: 14px;
+      background: linear-gradient(90deg, #E5A84B 0%, #FFC05B 50%, #C88426 100%);
+      border-radius: 50px;
+      border: 1px solid #FFE8B8;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+      transform: translateZ(52px) rotate(36deg);
+    }
+
+    /* Tombol Pengendali Preset */
+    .controls {
+      margin-top: 24px;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .btn {
+      padding: 8px 16px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      background: #FAF5ED;
+      color: #200C06;
+      border: 1px solid rgba(32, 12, 6, 0.2);
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn:hover {
+      background: #A04028;
+      color: #FFFFFF;
+      border-color: #A04028;
+    }
+  </style>
+</head>
+<body>
+
+  <h1 class="title">Pure CSS 3D Art — Rendang Padang 360°</h1>
+  <p class="subtitle">100% HTML &amp; CSS DIVs • DILARANG &lt;img&gt; / &lt;svg&gt; / WebGL</p>
+
+  <!-- 1. SCENE CONTAINER (perspektif) -->
+  <div class="scene" id="scene">
+    <div class="floor-shadow"></div>
+
+    <!-- 2. ROTATABLE OBJECT CONTAINER (.plate-container) -->
+    <div class="plate-container" id="rendang-object">
+      
+      <!-- TAMPAK BAWAH: DASAR PIRING KERAMIK PUTIH POLOS (.plate-bottom) -->
+      <div class="plate-bottom">
+        <div class="plate-foot-ring"></div>
+      </div>
+
+      <!-- TAMPAK ATAS: ISIAN RENDANG PADANG (.plate-top) -->
+      <div class="plate-top">
+        <div class="bowl-basin">
+          <div class="oil-lake"></div>
+
+          <!-- DAUN PISANG MURNI DIV -->
+          <div class="banana-leaf">
+            <div class="leaf-vein-1"></div>
+            <div class="leaf-vein-2"></div>
+            <div class="leaf-vein-3"></div>
+          </div>
+
+          <!-- TUMPUKAN DAGING RENDANG 3D MURNI DIV -->
+          <div class="beef-stack">
+            <!-- Chunk Daging 1 -->
+            <div class="chunk-1">
+              <div class="crumb-1"></div>
+              <div class="crumb-2"></div>
+            </div>
+
+            <!-- Chunk Daging 2 -->
+            <div class="chunk-2">
+              <div class="crumb-3"></div>
+            </div>
+
+            <!-- Chunk Daging 3 -->
+            <div class="chunk-3"></div>
+
+            <!-- Chunk Daging 4 -->
+            <div class="chunk-4"></div>
+
+            <!-- CABAI MERAH & KUNING MURNI DIV -->
+            <div class="chili-red-1"><div class="chili-stem"></div></div>
+            <div class="chili-red-2"><div class="chili-stem"></div></div>
+            <div class="chili-yellow"><div class="chili-stem"></div></div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Tombol Pintas Preset View -->
+  <div class="controls">
+    <button class="btn" onclick="setPreset(25, 0)">Tampak Rendang (Top)</button>
+    <button class="btn" onclick="setPreset(205, 0)">Tampak Dasar Piring (Bottom)</button>
+    <button class="btn" onclick="flip180()">Flip 180°</button>
+  </div>
+
+  <!-- 3. LOGIKA JAVASCRIPT MURNI (Hanya Menangkap Drag Mouse/Touch) -->
+  <script>
+    const scene = document.getElementById('scene');
+    const object = document.getElementById('rendang-object');
+
+    let isDragging = false;
+    let startX = 0;
+    let startY = 0;
+    let currentX = 25; // Rotasi X awal
+    let currentY = 0;  // Rotasi Y awal
+
+    // Mouse Drag Listeners
+    scene.addEventListener('mousedown', (e) => {
+      isDragging = true;
+      startX = e.clientX;
+      startY = e.clientY;
+    });
+
+    document.addEventListener('mousemove', (e) => {
+      if (!isDragging) return;
+      const deltaX = e.clientX - startX;
+      const deltaY = e.clientY - startY;
+
+      currentY += deltaX * 0.6;
+      currentX -= deltaY * 0.6;
+
+      startX = e.clientX;
+      startY = e.clientY;
+
+      updateTransform();
+    });
+
+    document.addEventListener('mouseup', () => {
+      isDragging = false;
+    });
+
+    // Touch Drag Listeners (Mobile Support)
+    scene.addEventListener('touchstart', (e) => {
+      if (e.touches.length === 1) {
+        isDragging = true;
+        startX = e.touches[0].clientX;
+        startY = e.touches[0].clientY;
+      }
+    });
+
+    document.addEventListener('touchmove', (e) => {
+      if (!isDragging || e.touches.length !== 1) return;
+      const deltaX = e.touches[0].clientX - startX;
+      const deltaY = e.touches[0].clientY - startY;
+
+      currentY += deltaX * 0.6;
+      currentX -= deltaY * 0.6;
+
+      startX = e.touches[0].clientX;
+      startY = e.touches[0].clientY;
+
+      updateTransform();
+    });
+
+    document.addEventListener('touchend', () => {
+      isDragging = false;
+    });
+
+    function updateTransform() {
+      object.style.transform = `rotateX(${currentX}deg) rotateY(${currentY}deg)`;
+    }
+
+    function setPreset(x, y) {
+      currentX = x;
+      currentY = y;
+      updateTransform();
+    }
+
+    function flip180() {
+      currentX += 180;
+      updateTransform();
+    }
+
+    // Set Rotasi Awal
+    updateTransform();
+  </script>
+</body>
+</html>

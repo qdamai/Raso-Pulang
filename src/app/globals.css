@@ -1,0 +1,271 @@
+@import "tailwindcss";
+
+@theme {
+  --color-deep-brown: #200C06;
+  --color-dark-cocoa: #2F130B;
+  --color-rendang-red: #9C2A1B;
+  --color-minang-vermillion: #C83726;
+  --color-burnt-terracotta: #A04028;
+  --color-burnt-spice: #C86D3B;
+  --color-warm-spice: #D49333;
+  --color-golden-ochre: #E5A84B;
+  --color-coconut-cream: #FAF5ED;
+  --color-soft-rice: #FFFBF5;
+  --color-banana-green: #3A7548;
+  --color-olive-leaf: #4A5A38;
+  --color-ukiran-gold: #E6B339;
+
+  --font-serif: var(--font-serif-display), "Playfair Display", Georgia, serif;
+  --font-sans: var(--font-sans-body), "Plus Jakarta Sans", system-ui, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #FAF5ED;
+  color: #200C06;
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Global Leaf Cursor (Daun Kunyit / Daun Salam Minangkabau) */
+html,
+body,
+*,
+button,
+a,
+input,
+select,
+textarea,
+label,
+[role="button"] {
+  cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'><path d='M4 28 C 8 20, 16 12, 28 4 C 28 18, 20 26, 10 28 C 6 28, 4 28 Z' fill='%233A7548' stroke='%23FAF5ED' stroke-width='1.5'/><path d='M6 26 C 12 20, 18 14, 26 6' stroke='%2376B887' stroke-width='2' stroke-linecap='round'/><path d='M12 20 C 15 17, 18 16, 21 15' stroke='%2376B887' stroke-width='1' stroke-linecap='round'/><path d='M9 23 C 11 21, 14 20, 16 19' stroke='%2376B887' stroke-width='1' stroke-linecap='round'/></svg>") 4 4, auto !important;
+}
+
+.cursor-spice-leaf,
+.cursor-spice-leaf *,
+.cursor-spice-chili,
+.cursor-spice-chili *,
+.cursor-spice-lemongrass,
+.cursor-spice-lemongrass * {
+  cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'><path d='M4 28 C 8 20, 16 12, 28 4 C 28 18, 20 26, 10 28 C 6 28, 4 28 Z' fill='%233A7548' stroke='%23FAF5ED' stroke-width='1.5'/><path d='M6 26 C 12 20, 18 14, 26 6' stroke='%2376B887' stroke-width='2' stroke-linecap='round'/><path d='M12 20 C 15 17, 18 16, 21 15' stroke='%2376B887' stroke-width='1' stroke-linecap='round'/><path d='M9 23 C 11 21, 14 20, 16 19' stroke='%2376B887' stroke-width='1' stroke-linecap='round'/></svg>") 4 4, auto !important;
+}
+
+/* Paper Texture Background (Solid Soft Cream) */
+.bg-paper-texture {
+  background-color: #FAF5ED;
+}
+
+/* Chiaroscuro Dark Atmosphere (Solid Deep Cocoa) */
+.bg-chiaroscuro-dark {
+  background-color: #200C06;
+}
+
+/* Traditional Red Minang Carved Motif Background (Pure SVG/CSS Vector - 100% Sharp, Solid Colors, No Images) */
+.bg-minang-damask {
+  background-color: #1F0704;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 64 64'><path d='M32 0 C 16 16, 0 16, 0 32 C 0 48, 16 48, 32 64 C 48 48, 64 48, 64 32 C 64 16, 48 16, 32 0 Z' fill='none' stroke='rgba(229,168,75,0.09)' stroke-width='1.2'/><path d='M32 12 C 22 22, 12 22, 12 32 C 12 42, 22 42, 32 52 C 42 42, 52 42, 52 32 C 52 22, 42 22, 32 12 Z' fill='none' stroke='rgba(200,109,59,0.12)' stroke-width='1'/><circle cx='32' cy='32' r='4' fill='rgba(229,168,75,0.14)'/><path d='M0 0 L64 64 M64 0 L0 64' stroke='rgba(229,168,75,0.04)' stroke-width='0.8'/></svg>");
+  background-size: 64px 64px;
+  background-repeat: repeat;
+  background-position: 0 0;
+}
+
+/* Deep Burgundy Wine Menu Editorial Background (Pure SVG/CSS Vector - 100% Sharp, Solid Colors, No Images) */
+.bg-wine-menu {
+  background-color: #1A0507;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 64 64'><path d='M32 0 C 16 16, 0 16, 0 32 C 0 48, 16 48, 32 64 C 48 48, 64 48, 64 32 C 64 16, 48 16, 32 0 Z' fill='none' stroke='rgba(229,168,75,0.09)' stroke-width='1.2'/><path d='M32 12 C 22 22, 12 22, 12 32 C 12 42, 22 42, 32 52 C 42 42, 52 42, 52 32 C 52 22, 42 22, 32 12 Z' fill='none' stroke='rgba(200,109,59,0.12)' stroke-width='1'/><circle cx='32' cy='32' r='4' fill='rgba(229,168,75,0.14)'/><path d='M0 0 L64 64 M64 0 L0 64' stroke='rgba(229,168,75,0.04)' stroke-width='0.8'/></svg>");
+  background-size: 64px 64px;
+  background-repeat: repeat;
+  background-position: 0 0;
+}
+
+/* Hairline Editorial Dividers & Ellipse Pills (Replacing stiff boxes) */
+.editorial-hairline {
+  border-bottom: 1px solid rgba(229, 168, 75, 0.2);
+}
+
+.pill-ellipse {
+  border: 1px solid rgba(229, 168, 75, 0.4);
+  border-radius: 9999px;
+  padding: 0.5rem 1.25rem;
+  font-size: 0.75rem;
+  font-family: var(--font-sans);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.pill-ellipse:hover {
+  background-color: #E5A84B;
+  color: #1A0507;
+  border-color: #E5A84B;
+  transform: translateY(-1px);
+}
+
+/* Horizontal Accordion Cards Physics (Flex 1 to Flex 3 Smooth Expansion) */
+.accordion-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .accordion-container {
+    flex-direction: row;
+    height: 480px;
+  }
+}
+
+.accordion-card {
+  flex: 1;
+  transition: flex 0.5s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+@media (min-width: 768px) {
+  .accordion-card:hover {
+    flex: 3.2;
+  }
+}
+.artifact-panel {
+  background-color: #FFFBF5;
+  border: 1px solid rgba(32, 12, 6, 0.18);
+  box-shadow: 0 4px 20px -2px rgba(32, 12, 6, 0.06);
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.artifact-panel:hover {
+  border-color: rgba(160, 64, 40, 0.4);
+  box-shadow: 0 8px 30px -4px rgba(160, 64, 40, 0.12);
+}
+
+.artifact-panel-dark {
+  background-color: #2F130B;
+  border: 1px solid rgba(229, 168, 75, 0.25);
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.artifact-panel-dark:hover {
+  border-color: rgba(229, 168, 75, 0.6);
+  box-shadow: 0 8px 30px -4px rgba(229, 168, 75, 0.2);
+}
+
+/* Thin Editorial Rule Divider (Solid color) */
+.editorial-rule {
+  height: 1px;
+  background-color: rgba(32, 12, 6, 0.15);
+  margin: 2rem 0;
+}
+
+/* Calligraphic Editorial Numbering (01, 02, 03) */
+.editorial-number {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 700;
+  color: #A04028;
+}
+
+/* Clean Editorial Frame Border */
+.editorial-frame {
+  background: #FFFBF5;
+  border: 1px solid rgba(32, 12, 6, 0.15);
+  padding: 20px;
+  transition: all 0.4s ease;
+}
+
+.editorial-frame:hover {
+  border-color: rgba(160, 64, 40, 0.4);
+}
+
+/* Accessible visible focus outlines */
+*:focus-visible {
+  outline: 2px solid #A04028;
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* Brass Plaque & Minang Frame Museum Styles (Solid colors) */
+.minang-frame {
+  position: relative;
+  background-color: #24130A;
+  border: 6px solid #381F10;
+  outline: 1px solid rgba(229, 168, 75, 0.4);
+  box-shadow: 
+    0 15px 35px -5px rgba(0, 0, 0, 0.7);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease, border-color 0.4s ease;
+}
+
+.minang-frame:hover {
+  border-color: #4A2B18;
+  outline-color: rgba(229, 168, 75, 0.8);
+  box-shadow: 
+    0 25px 50px -10px rgba(0, 0, 0, 0.85);
+}
+
+/* Traditional Wavy Minang Carved Frame (Solid colors) */
+.minang-carved-frame {
+  position: relative;
+  background-color: #24130A;
+  border: 8px solid #3D2214;
+  outline: 2px solid #E5A84B;
+  outline-offset: -4px;
+  border-radius: 12px;
+  box-shadow: 
+    0 20px 45px -5px rgba(0, 0, 0, 0.85),
+    0 0 25px rgba(229, 168, 75, 0.2);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.minang-carved-frame:hover {
+  border-color: #4E2A19;
+  outline-color: #F3C77C;
+  box-shadow: 
+    0 30px 60px -10px rgba(0, 0, 0, 0.95);
+  transform: translateY(-3px);
+}
+
+.brass-plaque {
+  background-color: #2B180D;
+  border: 1px solid rgba(229, 168, 75, 0.45);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+  position: relative;
+}
+
+/* Reduced motion accessibility support */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #FAF5ED;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #C86D3B;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #A04028;
+}
