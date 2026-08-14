@@ -2,7 +2,7 @@
 
   <img src="https://raw.githubusercontent.com/qdamai/Raso-Pulang/main/public/images/dev-cover-image.png" alt="Raso Pulang Banner" width="100%" />
 
-  # 🌾 Raso Pulang — A Taste That Feels Like Home
+  # 🌾 Raso Pulang: Turning Rendang & Minangkabau Culture Into an Interactive Experience
 
   **A Romantic Digital Love Letter to Rendang & Minangkabau Culinary Heritage**
 
